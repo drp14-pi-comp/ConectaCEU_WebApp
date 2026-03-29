@@ -1,0 +1,1 @@
+// Página genérica para visualizar os relatórios. As opções de relatório muda de acordo com o usuário.

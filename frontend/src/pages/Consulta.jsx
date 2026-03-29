@@ -1,0 +1,1 @@
+// Página genérica para todas as consultas(aulas, alunos, etc).

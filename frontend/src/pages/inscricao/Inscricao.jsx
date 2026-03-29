@@ -1,0 +1,1 @@
+// página para inscrição dos cursos disponíveis. Somente para os alunos e a secretaria.

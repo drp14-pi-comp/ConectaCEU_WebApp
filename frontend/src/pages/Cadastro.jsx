@@ -1,0 +1,1 @@
+// Página genérica para todo tipo de cadastro(aulas, usuários, cursos, etc).

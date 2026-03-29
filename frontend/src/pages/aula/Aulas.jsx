@@ -1,0 +1,1 @@
+// Página destinada a mostrar todas as aulas disponíveis.
