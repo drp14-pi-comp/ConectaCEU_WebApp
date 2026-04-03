@@ -1,1 +1,0 @@
-// Página destinada aos alunos para visualizar os cursos inscritos.

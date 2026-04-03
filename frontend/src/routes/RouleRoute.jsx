@@ -2,13 +2,16 @@ import { Navigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 
 
-// regra para rota privada
-export default function PrivateRoute({ children }) {
+// regras para o acesso da homepage
+export default function RoleRoute({ children, roles }) {
   const { user } = useAuth()
 
-  // se não estiver logado é redirecionado para página de login.
   if (!user) {
     return <Navigate to="/login" />
+  }
+
+  if (!roles.includes(user.tipo)) {
+    return <Navigate to="/home" />
   }
 
   return children

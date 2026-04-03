@@ -1,1 +1,0 @@
-// Página destinada ao admin, mostra todos os usuários com permissões(secretaria, coordenação e professores).

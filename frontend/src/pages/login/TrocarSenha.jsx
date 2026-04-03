@@ -1,1 +1,0 @@
-// Página para a trocar de senha do usuário.
