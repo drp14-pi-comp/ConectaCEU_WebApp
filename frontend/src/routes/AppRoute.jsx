@@ -3,8 +3,8 @@ import {Route, Routes, BrowserRouter} from "react-router-dom"
 
 //Rotas públicas
 import UserLogin from "../pages/login/UserLogin.jsx"
-import CriarConta from "../pages/login/CriarConta.jsx"
-import RecuperarSenha from "../pages/login/RecuperarSenha.jsx"
+import CreateAccount from "../pages/login/CreateAccount.jsx"
+import RecoverPassword from "../pages/login/RecoverPassword.jsx"
 import NotFound from '../pages/NotFound.jsx'
 
 
@@ -37,8 +37,8 @@ function AppRoute(){
                 <Routes>
                     {/* Rotas Publicas */}
                     <Route path="/login" element={<UserLogin />}/>
-                    <Route path="/criar-conta" element={<CriarConta />}/>
-                    <Route path="/recuperar-senha" element={<RecuperarSenha />}/>
+                    <Route path="/criar-conta" element={<CreateAccount />}/>
+                    <Route path="/recuperar-senha" element={<RecoverPassword />}/>
                     <Route path="*" element={<NotFound />}/>
 
 

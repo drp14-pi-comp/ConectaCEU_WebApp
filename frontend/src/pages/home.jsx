@@ -45,15 +45,15 @@ function Home() {
   const menu = homePorTipoUsuario[user?.tipo] || []
 
   return (
-    <div className='.container'>
+    <div className='container'>
       <h1>Bem-vindo, {user?.nome}</h1>
 
-      <div className='.content'>
+      <div className='content'>
         {menu.map((item, index) => (
           <div
             key={index}
             onClick={() => navigate(item.rota)}
-            className='.navlink'
+            className='navlink'
           >
             <h3>{item.label}</h3>
           </div>

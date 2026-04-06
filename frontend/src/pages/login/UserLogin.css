@@ -1,3 +1,128 @@
-.container{
-    color: #000;
+/* Estrutura geral */
+.container-login {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 0 5rem;
 }
+
+/* Estrutura do formulário */
+.container-login form{
+    width: 100%;
+    max-width: 480px;
+    align-items: center;
+    padding: 1rem;
+    background-color: #def2fe;
+    border-radius: 8px;
+}
+
+/* Título */
+.container-login h1{
+    font-size: 30px;
+    text-align: center;
+    padding: 1rem;
+    text-transform: uppercase;
+}
+
+/* Campos do formulário */
+.container-login .input-field {
+    position: relative;
+    width: 100%;
+    height: 50px;
+    margin: 40px 0px 5px 0px ;
+}
+
+.input-field input {
+    width: 100%;
+    height: 100%;
+    outline: none;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 40px;
+    font-size: 16px;
+    padding: 10px 30px 10px 30px;
+}
+
+/* Icones */
+.input-field .icon {
+    position: absolute;
+    height: 17px;
+    width: 17px;
+    right: 25px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #fff;
+}
+
+.container-login .button-showpassword{
+    position: absolute;
+    background-color: #fff;
+    height: 17px;
+    width: 17px;
+    right: 1px;
+    margin: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    
+}
+
+/* Esqueci a senha */
+.container-login .recall-forget {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14.5px;
+    padding: 8px 0px 20px 10px;
+}
+
+.recall-forget a:hover{
+    text-decoration: underline;
+}
+
+/* Lembre de mim */
+.container-login .checkbox-remember{
+    margin-right: 4px;
+    accent-color: #fff;
+}
+
+/* Botão entrar */
+.container-login .button-entry {
+    width: 100%;
+    height: 45px;
+    outline: none;
+    border-radius: 40px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 700;
+    text-shadow: none;
+    margin-top: 20px;
+}
+
+/* Link para "Criar Conta" */
+.signup-link p {
+    padding: 3rem .5rem 1rem .5rem;
+    cursor: default;
+}
+
+.signup-link p a:hover {
+    text-decoration: underline;
+}
+
+/* mensagem de erro */
+.container-login .error-message{
+    padding-top: 2rem;
+    color: rgb(230, 9, 9);
+}
+
+/* versão mobile */
+@media (max-width: 768px){
+
+    .container-login{
+        padding: 1rem;
+    }
+}
+
+
+
+
