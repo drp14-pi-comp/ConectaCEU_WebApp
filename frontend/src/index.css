@@ -9,7 +9,7 @@
 :root {
   --primary-color: #0d6efd;
   --secondary-color: #def2fe;
-  --background-color: #F5F9FC;
+  --background-color: linear-gradient(135deg, #1e3c72, #2a5298, #4facfe);
   --text-color: #0f1112;
   --font-family: sans-serif, Helvetica, Arial ;
 }
@@ -20,8 +20,6 @@ body {
   background-color: var(--background-color);
   color: var(--text-color);
   line-height: 1.6;
-  word-spacing: 0.2em;
-  letter-spacing: 0.02em;
   scroll-behavior: smooth;
 }
 
@@ -34,6 +32,7 @@ h1, h2, h3, h4 {
 a {
   text-decoration: none;
   color: var(--primary-color);
+  cursor: pointer;
 }
 
 /* Botões padrão */

@@ -1,27 +1,25 @@
 .container-create-acount {
-    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    text-align: center;
-    padding: 2rem;
+    min-height: 100vh;
+    background: var(--background-color);
 }
 
 .container-create-acount .backbutton{
+    display: flex;
     justify-content: left;
     align-items: flex-start;
 }
 
 .backbutton button{
-    width: 10%;
     height: 45px;
-    outline: none;
     border-radius: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    cursor: pointer;
     font-size: 16px;
     font-weight: 700;
-    text-shadow: none;
+    padding: 1rem;
     margin: 6rem 3rem 1rem 3rem;
+    background-color: var(--primary-color);
 }

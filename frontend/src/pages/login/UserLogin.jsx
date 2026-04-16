@@ -9,7 +9,7 @@ import { loginUser } from "../../services/AuthService"
 import "./UserLogin.css"
 
 import { Link, useNavigate } from "react-router-dom"
-import { useRef, useState } from "react"
+import { useState } from "react"
 
 
 function UserLogin () {
@@ -80,6 +80,7 @@ function UserLogin () {
 
         } catch (error) {
             setLoginError("Email/CPF ou senha inválidos")
+            console.log(error)
         }
     }
 
