@@ -58,6 +58,10 @@
     background-color: #fff;
 }
 
+.input-group input[type="password"]::placeholder{
+    color: red;
+}
+
 .input-group input::file-selector-button {
     padding: .4rem;
     border: none;
@@ -97,9 +101,10 @@
     padding-left: 1.2rem;
 }
 
-.input-group p{
+.input-group h4{
     font-size: 14px;
     margin-top: .5rem;
+    font-weight: normal;
 }
 
 .form-responsible{
@@ -145,7 +150,6 @@
 }
 
 .term input[type="checkbox"]{
-    width: 100%;
     transform: translateY(4px);
     width: 45px;
     height: 45px;
