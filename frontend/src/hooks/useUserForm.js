@@ -1,7 +1,15 @@
 import { useState } from "react"
-import { createUser, updateUser } from "../services/userService"
+import { useNavigate } from "react-router-dom"
+import toast from "react-hot-toast"
 
-// função responsável por montar o estado inicial
+import { createUser, updateUser } from "../services/userService"
+import { getAgeType } from "../utils/TypeAge"
+import { validateEmail } from "../utils/ValidateEmail"
+import { validateCPF } from "../utils/ValidateCPF"
+import { validateRG } from "../utils/ValidateRG"
+
+
+// função responsável por montar o estado inicial dos dados
 function getInitialFormData(user) {
     return {
         status: user?.status || "",
@@ -52,24 +60,76 @@ function getInitialFormData(user) {
     }
 }
 
+
+// Função para validar campos do formulário antes de enviar ao backend
+function validateForm(formData, ageType, role) {
+
+    const isEmail = validateEmail(formData.email)
+    
+    if (!isEmail) {
+        return "E-mail inválido!"
+    }
+    if (formData.tipo_documento === "cpf") {
+        const isCPF = validateCPF(formData.num_documento)
+        
+        if(!isCPF){
+            return "CPF inválido!"
+        }
+    }else if(formData.tipo_documento === "rg"){
+        const isRG = validateRG(formData.num_documento)
+        if(!isRG){
+            return "RG inválido!"
+        }
+    }else{
+        return "Tipo de documento inválido!"
+    }
+
+    if (formData.senha && formData.senha !== formData.repetir_senha) {
+        return "Senhas não coincidem!"
+    }
+
+    if (ageType === "minor" && !formData.responsaveis[0].nome_completo_responsavel) {
+        return "Responsável obrigatório para menores!"
+    }
+
+    if (ageType === "elderly" && !formData.documentos.doc_atestado) {
+        return "Atestado obrigatório para maiores de 70 anos!"
+    }
+
+    if (role !== "admin" && formData.tipo_usuario && formData.tipo_usuario !== "aluno") {
+        return "Você não pode definir esse tipo de usuário!"
+    }
+
+    return null
+}
+
+
 export function useUserForm(user) {
+
     const isEdit = !!user
     const role = user?.tipo_usuario || "aluno"
-
+    
+    const navigate = useNavigate()
     const [formData, setFormData] = useState(() => getInitialFormData(user))
+    const [error, setError] = useState(null) // mensagem de erro fixa
+    const [loading, setLoading] = useState(false)
+
+    const ageType = getAgeType(formData.data_nascimento)
 
     // inputs normais + arquivos
     const handleChange = (e) => {
         const { name, value, type, files } = e.target
 
+        setError(null)
+
         if (type === "file") {
         setFormData(prev => ({
-            ...prev,
-            documentos: {
-            ...prev.documentos,
-            [name]: files[0]
-            }
-        }))
+                ...prev,
+                documentos: {
+                ...prev.documentos,
+                [name]: files[0]
+                }
+            }))
         } else {
             setFormData(prev => ({
                 ...prev,
@@ -115,57 +175,73 @@ export function useUserForm(user) {
     const handleSubmit = async (e) => {
         e.preventDefault()
 
-        // validações antes de enviar pro backend
-        if (formData.senha !== formData.repetir_senha) {
-            return alert("Senhas não coincidem")
+        setError(null)
+
+        const validationError = validateForm(formData, ageType, role)
+
+        if(validationError){
+            setError(validationError)
+            toast.error(validationError)
+            return
         }
+
 
         try {
-        const form = new FormData()
+        
+            setLoading(true)
+            const form = new FormData()
 
-        // dados simples (email, telefone, etc)
-        Object.keys(formData).forEach((key) => {
-            if (key !== "documentos" && key !== "responsaveis") {
-            form.append(key, formData[key])
+
+            // dados simples (email, telefone, etc)
+            Object.keys(formData).forEach((key) => {
+                if (key !== "documentos" && key !== "responsaveis") {
+                    form.append(key, formData[key])
+                }
+            })
+
+            // 
+            if (role === "admin") {
+                form.append("status", "ativo")
             }
-        })
 
-        // 
-        if (role === "admin") {
-            form.append("status", "ativo")
-        }
+            // responsáveis
+            form.append("responsaveis", JSON.stringify(formData.responsaveis))
 
-        // responsáveis
-        form.append("responsaveis", JSON.stringify(formData.responsaveis))
+            // documentos principais
+            form.append("doc_frente", formData.documentos.doc_frente)
+            form.append("doc_verso", formData.documentos.doc_verso)
+            form.append("doc_foto", formData.documentos.doc_foto)
+            form.append("doc_atestado", formData.documentos.doc_atestado)
 
-        // documentos principais
-        form.append("doc_frente", formData.documentos.doc_frente)
-        form.append("doc_verso", formData.documentos.doc_verso)
-        form.append("doc_foto", formData.documentos.doc_foto)
-        form.append("doc_atestado", formData.documentos.doc_atestado)
+            // docs responsáveis
+            formData.documentos.responsaveis.forEach((resp, index) => {
+                if (resp.doc_responsavel) {
+                    form.append(`responsavel_${index}_doc`, resp.doc_responsavel)
+                }
+                if (resp.doc_autorizacao) {
+                    form.append(`responsavel_${index}_autorizacao`, resp.doc_autorizacao)
+                }
+            })
 
-        // docs responsáveis
-        formData.documentos.responsaveis.forEach((resp, index) => {
-            if (resp.doc_responsavel) {
-                form.append(`responsavel_${index}_doc`, resp.doc_responsavel)
+            
+            if (isEdit) {
+                await updateUser(user.id, form)
+                toast.success("Usuário atualizado!")
+            } else {
+                await createUser(form)
+                toast.success("Usuário criado!")
+                
+                setTimeout(() => {
+                    navigate("/login")
+                }, 1500)
             }
-            if (resp.doc_autorizacao) {
-                form.append(`responsavel_${index}_autorizacao`, resp.doc_autorizacao)
-            }
-        })
-
-        // envio
-        if (isEdit) {
-            await updateUser(user.id, form)
-            alert("Usuário atualizado!")
-        } else {
-            await createUser(form)
-            alert("Usuário criado!")
-        }
 
         } catch (error) {
             console.error(error)
-            alert("Erro ao salvar usuário")
+            setError("Erro ao salvar o usuário!")
+            toast.error("Erro ao salvar o usuário!")
+        }finally{
+            setLoading(false)
         }
     }
 
@@ -176,6 +252,8 @@ export function useUserForm(user) {
         handleResponsavelFileChange,
         handleSubmit,
         isEdit,
-        role
+        role,
+        error,
+        loading
     }
 }

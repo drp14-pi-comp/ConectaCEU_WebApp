@@ -10,7 +10,7 @@
 
 
 
-/* Estrutura do formulário */
+/* Estrutura do formulário de login*/
 .container-login form{
     width: 100%;
     max-width: 480px;
@@ -52,7 +52,7 @@
 }
 
 /* Icones */
-.input-field .icon {
+.input-field .icon-profile {
     position: absolute;
     height: 17px;
     width: 17px;
@@ -62,13 +62,24 @@
     color: #fff;
 }
 
+.input-field .icon-password {
+    position: absolute;
+    height: 17px;
+    width: 17px;
+    right: 0px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #fff;
+}
+
+/* Botão mostrar senha */
 .container-login .button-showpassword{
     position: absolute;
     background-color: #fff;
     height: 17px;
     width: 17px;
-    right: 1px;
-    margin: 0;
+    right: 25px;
+    margin: 0px;
     top: 50%;
     transform: translateY(-50%);
     
@@ -122,9 +133,16 @@ input[type="checkbox"] {
 }
 
 /* mensagem de erro */
-.container-login .error-message{
+.error-message{
+    text-align: center;
     padding-top: 2rem;
     color: rgb(230, 9, 9);
+}
+
+.error-message[id="emailError"]{
+    text-align: left;
+    padding-top: .4rem;
+    margin-left: 1rem;
 }
 
 /* versão mobile */

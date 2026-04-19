@@ -1,7 +1,6 @@
-// Página para a trocar de senha do usuário.
-
 import { useRef, useState } from 'react'
 import { recoverPassword } from '../../services/AuthService'
+import { validateEmail } from "../../utils/ValidateEmail"
 
 import "./RecoverPassword.css"
 
@@ -13,11 +12,6 @@ const RecoverPassword = () => {
   const [loading, setLoading] = useState(false)
   const timerRef = useRef(null)
 
-  // Validar email por caracteres
-  const validateEmail = (email) => {
-    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return regex.test(email);
-  }
 
   //função para sumir mensagem de envio/erro
   const showStatus = (msg) => {

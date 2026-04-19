@@ -4,7 +4,7 @@ import { getAgeType } from "../utils/TypeAge"
 
 import "./UserForm.css"
 
-// mensagem de erro bonita, checkbox responsiva, add hover
+//  checkbox responsiva
 
 const UserForm = () => {
 
@@ -17,16 +17,24 @@ const UserForm = () => {
     handleResponsavelFileChange,
     handleSubmit,
     isEdit,
-    role
+    role,
+    loading
   } = useUserForm(user)
+  
   
   const ageType = getAgeType(formData.data_nascimento)
 
 
   return (
     <div className="container-form-register">
-      <form className="form-register" onSubmit={handleSubmit}>
-      <h1>{isEdit ? "Meus dados" : "Cadastrar usuário"}</h1>
+      <form 
+        className="form-register" 
+        onSubmit={handleSubmit} 
+        aria-label="Formulário de cadastro"
+      >
+      <h1>{isEdit ? "Meus dados" 
+        : (role === "admin" ? "Cadastrar usuário" : "Cadastrar aluno")}
+      </h1>
 
         <div className="form-grid">
           
@@ -224,6 +232,8 @@ const UserForm = () => {
                 <input 
                   type="password" 
                   name="repetir_senha" 
+                  value={formData.repetir_senha}
+                  onChange={handleChange}
                   placeholder="***********" 
                   required
                 />
@@ -383,7 +393,7 @@ const UserForm = () => {
                   type="file" 
                   name="doc_autorizacao"
                   onChange={(e) => handleResponsavelFileChange(0, e)} 
-                  rrequired={!isEdit}
+                  required={!isEdit}
                 />
               </div>
             </div>
@@ -509,22 +519,22 @@ const UserForm = () => {
 
             <div className="term">
               <input type="checkbox" required/>
-              <p>O aluno ou responsável atesta que as informações registradas <br />
+              <p>O aluno ou responsável atesta que as informações registradas 
                 aqui são autênticas, estando sujeito ás devidas sanções caso contrário.
               </p>
             </div>
 
             <div className="term">
               <input type="checkbox" required/>
-              <p>O aluno ou responsável autoriza o uso de dados pessoais <br />
+              <p>O aluno ou responsável autoriza o uso de dados pessoais 
                 do aluno conforme a LGPD(Lei n° 13.709/2018).
               </p>
             </div>
 
             <div className="term">
               <input type="checkbox" required/>
-              <p>O aluno ou responsável autoriza o uso de imagem do aluno <br />
-                quando necessário para materiais de propaganda do CEU <br />
+              <p>O aluno ou responsável autoriza o uso de imagem do aluno 
+                quando necessário para materiais de propaganda do CEU 
                 conforme a LGPD(Lei n° 13.709/2018).
               </p>
             </div>
@@ -533,10 +543,13 @@ const UserForm = () => {
         )}
 
         <button 
-          className="btn" 
+          className={`btn ${loading ? "loading" : ""}`}
           type="submit" 
+          disabled={loading}
         >
-          {isEdit ? "Salvar alterações" : "Criar conta"}
+          {loading ? "Salvando..." : 
+            (isEdit ? "Salvar alterações" : "Criar conta")
+          }
         </button>
 
       </form>

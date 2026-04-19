@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom"
 import Formulario from "../../components/UserForm.jsx"
+import Back from "../../assets/icons/arrow-left.svg?react"
 
 import "./CreateAccount.css"
 
@@ -11,7 +12,9 @@ const CreateAccount = () => {
   return (
     <div className='container-create-acount'>
       <div className="backbutton">
-        <button type="back" onClick={() => navigate("/login")}>Voltar</button>
+        <button type="back" onClick={() => navigate("/login")}>
+          <Back className="icon-back"/>
+        </button>
       </div>
 
         <Formulario/>
