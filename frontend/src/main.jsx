@@ -6,6 +6,7 @@ import AppRoute from "./routes/AppRoute.jsx"
 import { AuthProvider } from "./context/AuthProvider"
 
 import './index.css'
+import { BrowserRouter } from 'react-router-dom'
 
 
 const toastStyle = {
@@ -17,9 +18,11 @@ const toastStyle = {
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <AuthProvider>
-      <Toaster toastOptions={{ style: toastStyle }}/>
-      <AppRoute />
-    </AuthProvider>  
+    <BrowserRouter>
+      <AuthProvider>
+        <Toaster toastOptions={{ style: toastStyle }}/>
+        <AppRoute />
+      </AuthProvider>
+    </BrowserRouter>
   </StrictMode>
 )

@@ -1,28 +1,23 @@
-import { useState } from "react"
-import { useNavigate } from "react-router-dom"
+import { useContext, useState } from "react"
+import { useLocation, useNavigate } from "react-router-dom"
 
 import { loginUser } from "../services/AuthService"
 import { validateEmail } from "../utils/ValidateEmail"
 import { validateCPF } from "../utils/ValidateCPF"
+import { AuthContext } from "../context/AuthContext"
 
 
 export function useUserLogin (username, password, rememberMe) {
 
     // "useNavigate" para facilitar a navegação entre as páginas
     const navigate = useNavigate()
+    const location = useLocation()
+    const from = location.state?.from || "/"
 
     const [credentialError, setCredentialError] = useState("");
     const [loginError, setLoginError] = useState("")
+    const { login } = useContext(AuthContext)
     
-    
-    // Salva autenticação
-    const saveAuth = (data) => {
-        if(rememberMe) {
-            localStorage.setItem("token", data.token)//Fica salvo mesmo após fechar o navegador
-        } else{
-            sessionStorage.setItem("token", data.token)//Só dura na sessão (aba aberta)
-        }
-    }
 
     // Função para enviar o formulário de login
     const handleSubmit = async(e) => {
@@ -35,20 +30,27 @@ export function useUserLogin (username, password, rememberMe) {
         const isCPF = validateCPF(username)
         const isValidCredential = isEmail || isCPF
 
-        // Fazendo a validação email/cpf
+        // valida senha vazia
+        if (!password) {
+            setLoginError("Senha obrigatória")
+            return
+        }
+
+        // Valida email/cpf.
         if (!isValidCredential) {
             setCredentialError("Por favor, insira um email ou CPF válido");
             return;
         } 
 
         try {
+            // Dados enviados para API.
             const data = await loginUser(username, password)
 
-            // Salvar token dependendo do "lembre de mim"
-            saveAuth(data)
+            // Salva usuário no contexto.
+            login(data, rememberMe)
 
-            // Redirecionado para home, caso válido.
-            navigate("/")
+            // Redirecionado para home.
+            navigate(from)
 
         } catch (error) {
             setLoginError("Email/CPF ou senha inválidos")

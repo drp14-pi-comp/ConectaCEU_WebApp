@@ -12,7 +12,7 @@ import "./UserLogin.css"
 
 function UserLogin () {
     const [showPassword, setShowPassword] = useState(false)
-    const [username, setUserName] = useState("")
+    const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
     const [rememberMe, setRememberme] = useState(false)
 
@@ -33,13 +33,13 @@ function UserLogin () {
                     <input 
                         type="text" 
                         placeholder="CPF ou E-mail" 
-                        name="text"
-                        id="text"
+                        name="username"
+                        id="username"
                         autoComplete="username"
                         required 
                         aria-required="true"
                         value={username}
-                        onChange={(e) => setUserName(e.target.value)}
+                        onChange={(e) => setUsername(e.target.value)}
                         aria-invalid={credentialError ? "true" : "false"}
                         aria-describedby={credentialError ? "emailError" : undefined}
                     />
