@@ -1,0 +1,159 @@
+.container-footer {
+    background-color: #333;
+    width: 100%;
+
+    color: white;
+    font-size: 14px;
+    line-height: 2;
+
+    
+    padding-top: 1rem;
+}
+
+.container-footer address { 
+    font-style: normal; 
+}
+
+/* Estrutura do conteúdo */
+.content-footer {
+    display: flex;
+    justify-content: space-around; 
+    align-items: center;
+    padding: .6rem 1rem;
+}
+
+/* Logo do CEU */
+
+.content-footer .logo-ceu {
+    height: auto;
+    max-width: 100px;
+    width: 100%;
+    margin-right: 1rem;
+}
+
+/* Informções CEU */
+
+.info-ceu{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    text-align: left;
+    gap: 1rem;
+}
+
+.contact-ceu {
+    text-align: left;
+    list-style: none;
+}
+
+.contact-ceu span{
+    font-weight: bold;
+    letter-spacing: .05rem;
+}
+
+.contact-ceu a{
+    color: white;
+    text-decoration: none;
+}
+
+.contact-ceu a:hover{
+    color: var(--primary-color);
+}
+
+/* Redes sociais */
+
+.social-ceu {
+    font-size: 16px;
+    text-align: left;
+}
+
+.icons-group {
+    display: flex;
+    justify-content: space-around; 
+    margin-top: .5rem;
+}
+
+/* Icones  */
+.icon-facebook{
+    width: 22px;
+    height: 22px;
+    fill: #1877F2; 
+}
+
+.icon-instagram{
+    width: 22px;
+    height: 22px;
+    fill: #E1306C;
+}
+
+.icon-facebook:hover{
+    transition: .6s ease;
+    opacity: 0.6;
+}
+
+.icon-instagram:hover{
+    transition: .6s ease;
+    opacity: 0.6;
+}
+
+/* DIREITOS PI*/
+
+.copyright {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    background-color: #222;
+
+    color: white;
+    text-align: center;
+    font-size: 12px;
+    
+    padding: 0.4rem 0rem;
+    margin-top: 1em;
+}
+
+@media (max-width: 768px) {
+    .container-footer{
+        font-size: 11px;
+    }
+
+    .content-footer {
+        flex-direction: column;
+        text-align: left;
+        gap: 1em;
+    }
+
+    .info-ceu{
+        width: 100%;
+        flex-direction: column;
+    }
+
+    .logo-ceu{
+        align-items: center;
+        margin: 0;
+    }
+
+    .contact-ceu{
+        text-align: left;
+        font-size: 12px;
+        padding: 0;
+    }
+    
+    .contact-ceu ul{
+        padding: 0;
+    }
+    
+    .social-ceu {
+        margin-top: 1em;
+        font-size: 13px;
+        text-align: center;
+    }
+
+    .icons-group{
+        gap: .5rem;
+    }
+
+    .copyright{
+        font-size: 10px;
+    }
+}

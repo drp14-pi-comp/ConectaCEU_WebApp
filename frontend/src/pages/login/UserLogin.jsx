@@ -55,14 +55,6 @@ function UserLogin () {
                 </div>
 
                 <div className="input-field">
-                    <button 
-                        className="button-showpassword" 
-                        type="button" 
-                        onClick={() => setShowPassword(!showPassword)}>
-                        {showPassword ? <Eye className="icon-password"/> 
-                            : <EyeClosed className="icon-password"/>
-                        }
-                    </button>
                     <input 
                         type={showPassword ? "text" : "password"} 
                         placeholder="Senha"
@@ -74,6 +66,15 @@ function UserLogin () {
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                     />
+                    <button 
+                        className="button-showpassword" 
+                        type="button" 
+                        onClick={() => setShowPassword(!showPassword)}
+                    >
+                        {showPassword ? <Eye className="icon-password"/> 
+                            : <EyeClosed className="icon-password"/>
+                        }
+                    </button>
                     
                 </div>
 

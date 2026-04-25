@@ -1,12 +1,12 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-
 import { Toaster } from "react-hot-toast"
-
-import './index.css'
 
 import AppRoute from "./routes/AppRoute.jsx"
 import { AuthProvider } from "./context/AuthProvider"
+
+import './index.css'
+
 
 const toastStyle = {
   fontSize: '18px',

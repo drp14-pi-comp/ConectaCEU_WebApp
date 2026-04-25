@@ -4,7 +4,8 @@
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background: var(--background-color);
+    background: var(--background-secondary-color);
+    margin-top: 2rem;
 }
 
 .container-create-acount .backbutton{
@@ -20,7 +21,7 @@
     height: 30px;
     left: 15px;
     transform: translateY(-50%);
-    color: #fff;
+    fill: #fff;
 }
 
 /* botao de volta */

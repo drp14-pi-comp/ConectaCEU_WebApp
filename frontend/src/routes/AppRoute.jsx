@@ -1,5 +1,7 @@
 import {Route, Routes, BrowserRouter} from "react-router-dom"
 
+//Layout 
+import FullLayout from "../pages/layout/FullLayout.jsx"
 
 //Rotas públicas
 import UserLogin from "../pages/login/UserLogin.jsx"
@@ -35,128 +37,130 @@ function AppRoute(){
         <div>
             <BrowserRouter>
                 <Routes>
-                    {/* Rotas Publicas */}
-                    <Route path="/login" element={<UserLogin />}/>
-                    <Route path="/criar-conta" element={<CreateAccount />}/>
-                    <Route path="/recuperar-senha" element={<RecoverPassword />}/>
-                    <Route path="*" element={<NotFound />}/>
+                    <Route element={<FullLayout/>}>
+                        {/* Rotas Publicas */}
+                        <Route path="/login" element={<UserLogin />}/>
+                        <Route path="/criar-conta" element={<CreateAccount />}/>
+                        <Route path="/recuperar-senha" element={<RecoverPassword />}/>
+                        <Route path="*" element={<NotFound />}/>
 
 
-                    {/* Rotas Privadas */}
-                    <Route element={<PrivateRoute />}>
+                        {/* Rotas Privadas */}
+                        <Route element={<PrivateRoute />}>
 
-                        <Route path="/"element={<Home/>}/>
-                        
-                        {/* admin */}
-                        <Route
-                            path="/usuarios"
-                            element={
-                                <RoleRoute roles={["admin"]}>
-                                    <Usuarios />
-                                </RoleRoute>
-                            }
-                        />
+                            <Route path="/"element={<Home/>}/>
+                            
+                            {/* admin */}
+                            <Route
+                                path="/usuarios"
+                                element={
+                                    <RoleRoute roles={["admin"]}>
+                                        <Usuarios />
+                                    </RoleRoute>
+                                }
+                            />
 
-                        {/* admin/cadastro */}
-                        <Route
-                            path="/cadastro"
-                            element={
-                                <RoleRoute roles={["admin", "professor", "secretaria", "coordenador"]}>
-                                    <Cadastro />
-                                </RoleRoute>
-                            }
-                        />
+                            {/* admin/cadastro */}
+                            <Route
+                                path="/cadastro"
+                                element={
+                                    <RoleRoute roles={["admin", "professor", "secretaria", "coordenador"]}>
+                                        <Cadastro />
+                                    </RoleRoute>
+                                }
+                            />
 
-                        <Route
-                            path="/consulta"
-                            element={
-                                <RoleRoute roles={["secretaria", "coordenador"]}>
-                                    <Consulta />
-                                </RoleRoute>
-                            }
-                        />
+                            <Route
+                                path="/consulta"
+                                element={
+                                    <RoleRoute roles={["secretaria", "coordenador"]}>
+                                        <Consulta />
+                                    </RoleRoute>
+                                }
+                            />
 
-                        <Route
-                            path="/relatorios"
-                            element={
-                                <RoleRoute roles={["professor","secretaria", "coordenador"]}>
-                                    <Relatorios />
-                                </RoleRoute>
-                            }
-                        />
+                            <Route
+                                path="/relatorios"
+                                element={
+                                    <RoleRoute roles={["professor","secretaria", "coordenador"]}>
+                                        <Relatorios />
+                                    </RoleRoute>
+                                }
+                            />
 
-                        <Route
-                            path="/comunicados"
-                            element={
-                                <RoleRoute roles={["secretaria", "coordenador"]}>
-                                    <Comunicados />
-                                </RoleRoute>
-                            }
-                        />
+                            <Route
+                                path="/comunicados"
+                                element={
+                                    <RoleRoute roles={["secretaria", "coordenador"]}>
+                                        <Comunicados />
+                                    </RoleRoute>
+                                }
+                            />
 
-                        <Route
-                            path="/inscricao"
-                            element={
-                                <RoleRoute roles={["aluno"]}>
-                                    <Inscricao />
-                                </RoleRoute>
-                            }
-                        />
+                            <Route
+                                path="/inscricao"
+                                element={
+                                    <RoleRoute roles={["aluno"]}>
+                                        <Inscricao />
+                                    </RoleRoute>
+                                }
+                            />
 
-                        <Route
-                            path="/minhas-inscricoes"
-                            element={
-                                <RoleRoute roles={["aluno"]}>
-                                    <MinhasInscricoes />
-                                </RoleRoute>
-                            }
-                        />
+                            <Route
+                                path="/minhas-inscricoes"
+                                element={
+                                    <RoleRoute roles={["aluno"]}>
+                                        <MinhasInscricoes />
+                                    </RoleRoute>
+                                }
+                            />
 
-                        <Route
-                            path="/emitir-documentos"
-                            element={
-                                <RoleRoute roles={["aluno", "secretaria", "coordenador"]}>
-                                    <EmitirDocumentos />
-                                </RoleRoute>
-                            }
-                        />
+                            <Route
+                                path="/emitir-documentos"
+                                element={
+                                    <RoleRoute roles={["aluno", "secretaria", "coordenador"]}>
+                                        <EmitirDocumentos />
+                                    </RoleRoute>
+                                }
+                            />
 
-                        <Route
-                            path="/validar-cadastros"
-                            element={
-                                <RoleRoute roles={["secretaria"]}>
-                                    <ValidarCadastro />
-                                </RoleRoute>
-                            }
-                        />
+                            <Route
+                                path="/validar-cadastros"
+                                element={
+                                    <RoleRoute roles={["secretaria"]}>
+                                        <ValidarCadastro />
+                                    </RoleRoute>
+                                }
+                            />
 
-                        <Route
-                            path="/presenca"
-                            element={
-                                <RoleRoute roles={[]}>
-                                    <Presenca />
-                                </RoleRoute>
-                            }
-                        />
+                            <Route
+                                path="/presenca"
+                                element={
+                                    <RoleRoute roles={[]}>
+                                        <Presenca />
+                                    </RoleRoute>
+                                }
+                            />
 
-                        <Route
-                            path="/gerenciar-aulas"
-                            element={
-                                <RoleRoute roles={["professor"]}>
-                                    <GerenciarAulas />
-                                </RoleRoute>
-                            }
-                        />
+                            <Route
+                                path="/gerenciar-aulas"
+                                element={
+                                    <RoleRoute roles={["professor"]}>
+                                        <GerenciarAulas />
+                                    </RoleRoute>
+                                }
+                            />
 
-                        <Route
-                            path="/meus-dados"
-                            element={
-                                <RoleRoute roles={["aluno"]}>
-                                    <MeusDados />
-                                </RoleRoute>
-                            }
-                        />
-                        
+                            <Route
+                                path="/meus-dados"
+                                element={
+                                    <RoleRoute roles={["aluno"]}>
+                                        <MeusDados />
+                                    </RoleRoute>
+                                }
+                            />
+                            
+                        </Route>
                     </Route>
                 </Routes>
             </BrowserRouter>
