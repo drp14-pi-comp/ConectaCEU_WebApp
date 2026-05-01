@@ -7,6 +7,7 @@ import FullLayout from "../pages/layout/FullLayout.jsx"
 import UserLogin from "../pages/login/UserLogin.jsx"
 import CreateAccount from "../pages/login/CreateAccount.jsx"
 import RecoverPassword from "../pages/login/RecoverPassword.jsx"
+import ResetPassword from "../pages/login/ResetPassword.jsx"
 import NotFound from '../pages/NotFound.jsx'
 
 
@@ -41,6 +42,7 @@ function AppRoute(){
                     <Route path="/login" element={<UserLogin />}/>
                     <Route path="/criar-conta" element={<CreateAccount />}/>
                     <Route path="/recuperar-senha" element={<RecoverPassword />}/>
+                    <Route path="/redefinir-senha" element={<ResetPassword />}/>
                     <Route path="*" element={<NotFound />}/>
 
 

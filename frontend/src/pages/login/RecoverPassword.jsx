@@ -1,4 +1,6 @@
 import { useRef, useState } from 'react'
+import { Link } from "react-router-dom"
+
 import { recoverPassword } from '../../services/AuthService'
 import { validateEmail } from "../../utils/ValidateEmail"
 
@@ -96,7 +98,7 @@ const RecoverPassword = () => {
         }
 
         <div className='link'>
-          <a href="/login">Cancelar</a>
+          <Link to="/login">Cancelar</Link>
         </div>
         
       </form>

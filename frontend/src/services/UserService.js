@@ -1,10 +1,12 @@
-// Trocar a URL da API e colocar o caminho para cada serviço.
-const URL_API = ""
+// Serviços para os usuários(Criar, atualizar, excluir e consultar)
+// Secretaria, professor e admin
+
+const URL_API = import.meta.env.VITE_API_URL
 
 
 // Novo usuário (aluno, coordenador, professor, etc)
 export const createUser = async (formData) => {
-  const response = await fetch(`${URL_API}/`, {
+  const response = await fetch(`${URL_API}/create-user`, {
     method: "POST",
     body: formData
   })
@@ -18,7 +20,7 @@ export const createUser = async (formData) => {
 
 // Atualiza dados do usuário 
 export const updateUser = async (id, formData) => {
-  const response = await fetch(`${URL_API}/{path_aqui}/${id}`, {
+  const response = await fetch(`${URL_API}/users/${id}`, {
     method: "PUT",
     body: formData
   })
