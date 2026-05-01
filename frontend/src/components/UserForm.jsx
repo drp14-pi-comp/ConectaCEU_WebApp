@@ -33,7 +33,7 @@ const UserForm = () => {
         aria-label="Formulário de cadastro"
       >
       <h1>{isEdit ? "Meus dados" 
-        : (role === "admin" ? "Cadastrar usuário" : "Cadastrar aluno")}
+        : (role === "admin" ? "Cadastrar usuário" : "Cadastrar aluno(a)")}
       </h1>
 
         <div className="form-grid">

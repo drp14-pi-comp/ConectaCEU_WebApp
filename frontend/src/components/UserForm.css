@@ -13,7 +13,8 @@
     flex-direction: column;
     background-color: #def2fe;
     width: 100%;
-    padding: 1rem 5rem;
+    /* padding: 1rem 5rem; */
+    padding: 1rem clamp(.5rem, 5vw, 5rem);
     border-radius: 8px;
     gap: 1rem;
 }
@@ -41,7 +42,8 @@
     width: 100%;
     display: flex;
     flex-direction: column;
-    padding: .5rem 2rem;
+    /* padding: .5rem 2rem; */
+    padding: .5rem clamp(.5rem, 3vw, 2rem);
 }
 
 .input-group label{
@@ -73,6 +75,11 @@
 
 .input-group input[type="file"]{
     padding: .23rem;
+}
+
+.input-group input[type="password"]::placeholder{
+    position: absolute;
+    margin-top: 4.3px;
 }
 
 /* obrigatório */
@@ -205,7 +212,7 @@
     }
     
     .input-group{
-        padding: .4rem;
+        padding: .4rem 1.5rem;
     }
 
     .terms-container{
