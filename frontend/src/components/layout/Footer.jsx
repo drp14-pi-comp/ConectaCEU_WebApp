@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom"
 
-import Logo from "../../assets/images/connectCEU-logo.jpeg"
+import Logo from "../../assets/images/logo-ceusaorafael.png"
 import Facebook from "../../assets/icons/facebook.svg?react"
 import Instagram from "../../assets/icons/instagram.svg?react"
 

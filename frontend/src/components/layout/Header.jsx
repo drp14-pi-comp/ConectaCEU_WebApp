@@ -1,34 +1,40 @@
 import Logo from "../../assets/images/connectCEU-logo.jpeg"
 import Logout from "../../assets/icons/user-logout.svg?react"
 
-import { NavLink } from "react-router-dom"
-import { useContext } from "react"
+import { Link } from "react-router-dom"
+import { useContext, useState } from "react"
 
 import { AuthContext } from "../../context/AuthContext"
-// import { useAuth } from "../../hooks/useAuth"
+import { useAuth } from "../../hooks/useAuth"
 
 import "./Header.css"
 
 
 const Navbar = () => {
   
-  // const { user } = useAuth()
-  const user = true
+  const { user } = useAuth()
+  const [modalLogout, setModalLogout] = useState(false)
   const { logout } = useContext(AuthContext)
+  
 
   return (
     <header className="header">
-      <NavLink to="/" aria-label="Voltar para página inicial">
+      <Link to="/" aria-label="Voltar para página inicial">
           <img src={Logo} alt="CEU São Rafael" className="logo-ceu" />
-      </NavLink>
+      </Link>
 
       {user && (
         <>
-          <NavLink to="/login" aria-label="Voltar para página de login">
-            <button onClick={logout} aria-label="Sair da conta">
-              <Logout className="icon-logout"/>
-            </button>
-          </NavLink>
+          <button onClick={() => setModalLogout(true)} aria-label="Sair da conta">
+            <Logout className="icon-logout"/>
+          </button>
+
+          {modalLogout && (
+            <div className="modal-logout">
+              <button type="logout" onClick={logout}>Sair</button>
+              <button type="cancel" onClick={() => setModalLogout(false)}>Cancelar</button>
+            </div>
+          )}
         </>
       )}
 

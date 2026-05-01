@@ -26,9 +26,9 @@
 
 .content-footer .logo-ceu {
     height: auto;
-    max-width: 100px;
     width: 100%;
-    margin-right: 1rem;
+    max-width: 100px;
+    transform: scale(1.4);
 }
 
 /* Informções CEU */
@@ -38,7 +38,7 @@
     flex-direction: row;
     align-items: center;
     text-align: left;
-    gap: 1rem;
+    gap: 2rem;
 }
 
 .contact-ceu {
