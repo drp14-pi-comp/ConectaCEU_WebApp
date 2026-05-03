@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom"
+import { Link } from "react-router-dom"
 
 import Logo from "../../assets/images/logo-ceusaorafael.png"
 import Facebook from "../../assets/icons/facebook.svg?react"
@@ -15,13 +15,13 @@ const Footer = () => {
         <div className="content-footer">
 
           <div className="info-ceu">
-            <NavLink to="/" aria-label="Voltar para página inicial">
+            <Link to="/" aria-label="Voltar para página inicial">
               <img
                 src={Logo}
                 alt="CEU São Rafael"
                 className="logo-ceu"
               />
-            </NavLink>
+            </Link>
 
             <section aria-label="Informações de contato do CEU São Rafael">
               <ul className="contact-ceu" >
@@ -53,6 +53,11 @@ const Footer = () => {
         <p>
           &copy; 2026 Todos os direitos reservados Projeto Integrador 1
         </p>
+      </div>
+      <div className="terms-privacy">
+        <Link to="/termos-de-uso" className="link" target="_blank">Termos de Uso</Link>
+        <p>|</p>
+        <Link to="/politica-de-privacidade" className="link" target="_blank">Política de Privacidade</Link>
       </div>
       
     </footer>

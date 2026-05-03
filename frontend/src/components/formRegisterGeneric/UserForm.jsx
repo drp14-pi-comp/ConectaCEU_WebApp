@@ -1,11 +1,13 @@
-import { useUserForm } from "../hooks/useUserForm"
-import { useAuth } from '../hooks/useAuth'
-import { getAgeType } from "../utils/TypeAge"
+import { Link } from "react-router-dom"
+
+import { useUserForm } from "../../hooks/useUserForm"
+import { useAuth } from '../../hooks/useAuth'
+import { getAgeType } from "../../utils/TypeAge"
 
 import "./UserForm.css"
 
-//  checkbox responsiva
 
+// add botao de excluir conta, modal para confirmaçao e melhorar ace
 const UserForm = () => {
 
   const { user } = useAuth()
@@ -217,14 +219,14 @@ const UserForm = () => {
                   maxLength={128} 
                   required
                 />
-                <h4>Deve conter: <br />
+                <h2>Deve conter: <br />
                   <ul>
                     <li>Entre 8 a 128 caracteres;</li>
                     <li>Pelo menos uma letra maiúscula e uma minúscula;</li>
                     <li>Pelo menos um número;</li>
                     <li>Pelo menos um caractere especial (!, @, $, &, %).</li>
                   </ul>
-                </h4>
+                </h2>
               </div>
 
               <div className="input-group">
@@ -321,9 +323,9 @@ const UserForm = () => {
         
         {ageType === "minor" && (
           <div className="form-responsible">
-            <h2>Área do responsável (Obrigatória somente se o aluno for menor de idade)</h2>
+            <h3>Área do responsável (Obrigatória somente se o aluno for menor de idade)</h3>
 
-            <h3>Responsável 1</h3>
+            <h4>Responsável 1</h4>
             <div className="responsible-area">
 
               <div className="input-group">
@@ -398,7 +400,7 @@ const UserForm = () => {
               </div>
             </div>
 
-            <h3>Responsável 2</h3>
+            <h5>Responsável 2</h5>
             <div className="responsible-area">
 
               <div className="input-group">
@@ -472,7 +474,7 @@ const UserForm = () => {
         {ageType === "elderly" && (
           <div className="form-responsible">
 
-            <h2>Atestado de saúde(Obrigatória somente se o aluno tiver 70+ anos)</h2>
+            <h3>Atestado de saúde(Obrigatória somente se o aluno tiver 70+ anos)</h3>
             <div className="responsible-area">
               <div className="input-group">
                 <label>Carregar documento<span>*</span></label>
@@ -493,23 +495,31 @@ const UserForm = () => {
             
             <div className="term">
               <input type="checkbox" required/>
-              <p>O funcionário atesta que as informações registradas <br />
+              <p>O funcionário atesta que as informações registradas 
                 aqui são autênticas, estando sujeito ás devidas sanções caso contrário.
               </p>
             </div>
 
             <div className="term">
               <input type="checkbox" required/>
-              <p>O funcionário autoriza o uso de dados pessoais <br />
+              <p>O funcionário autoriza o uso de dados pessoais 
                 conforme a LGPD(Lei n° 13.709/2018).
               </p>
             </div>
 
             <div className="term">
               <input type="checkbox" required/>
-              <p>O funcionário autoriza o uso de imagem quando<br />
-                necessário para materiais de propaganda do CEU <br />
+              <p>O funcionário autoriza o uso de imagem quando
+                necessário para materiais de propaganda do CEU 
                 conforme a LGPD(Lei n° 13.709/2018).
+              </p>
+            </div>
+            <div className="term">
+              <input type="checkbox" required/>
+              <p>O funcionário concorda com os {" "}
+                <Link to="/termos-de-uso" className="link" target="_blank">Termos de Uso</Link>
+                {" "} e as {" "}
+                <Link to="/politica-de-privacidade" className="link" target="_blank">Políticas de Privacidade</Link>.
               </p>
             </div>
 
@@ -536,6 +546,15 @@ const UserForm = () => {
               <p>O aluno ou responsável autoriza o uso de imagem do aluno 
                 quando necessário para materiais de propaganda do CEU 
                 conforme a LGPD(Lei n° 13.709/2018).
+              </p>
+            </div>
+
+            <div className="term">
+              <input type="checkbox" required/>
+              <p>O aluno ou responsável concorda com os {" "}  
+                <Link to="/termos-de-uso" className="link" target="_blank">Termos de Uso</Link>
+                {" "}e as{" "}
+                <Link to="/politica-de-privacidade" className="link" target="_blank">Política de Privacidade</Link>.
               </p>
             </div>
 

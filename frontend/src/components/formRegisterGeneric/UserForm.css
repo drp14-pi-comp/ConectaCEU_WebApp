@@ -109,7 +109,7 @@
     padding-left: 1.2rem;
 }
 
-.input-group h4{
+.input-group h2{
     font-size: 14px;
     margin-top: .5rem;
     font-weight: normal;
@@ -122,10 +122,22 @@
     padding: 1rem;
 }
 
-.form-responsible h2{
+.form-responsible h3{
     text-align: center;
     font-size: 1.5rem;
     padding: 2rem;
+}
+
+.form-responsible h4{
+    text-align: left;
+    font-size: 1.2rem;
+    padding: 0rem;
+}
+
+.form-responsible h5{
+    text-align: left;
+    font-size: 1.2rem;
+    padding: 0rem;
 }
 
 .responsible-area{
@@ -136,12 +148,6 @@
     margin-bottom: 2rem;
     border-radius: 8px;
     background-color: var(--secondary-color);
-}
-
-.responsible-area h3{
-    text-align: left;
-    font-size: 1.2rem;
-    padding: 1rem;
 }
 
 /* termos */
@@ -172,6 +178,14 @@
     width: 100%;
     font-size: 16px;
     margin-right: 8rem;
+}
+
+.term .link{
+    text-decoration: underline;
+}
+
+.link:hover{
+    opacity: .7;
 }
 
 /* botão enviar */
