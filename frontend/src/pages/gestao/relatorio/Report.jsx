@@ -1,11 +1,12 @@
 // Página genérica para visualizar os relatórios. As opções de relatório muda de acordo com o usuário.
 
-import React from 'react'
+import { Outlet } from 'react-router-dom'
 
-const Relatorios = () => {
+function Relatorios () {
   return (
     <div>
-      
+      <h1>relatorios</h1>
+      <Outlet/>
     </div>
   )
 }

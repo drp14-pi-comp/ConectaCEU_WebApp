@@ -1,11 +1,12 @@
 // Página genérica para todas as consultas(aulas, alunos, etc).
 
-import React from 'react'
+import { Outlet } from 'react-router-dom'
 
-const Consulta = () => {
+function Consulta () {
   return (
     <div>
       <h1>Consulta</h1>
+      <Outlet/>
     </div>
   )
 }

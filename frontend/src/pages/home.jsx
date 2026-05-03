@@ -2,7 +2,7 @@ import { useAuth } from '../hooks/useAuth'
 import { useNavigate } from 'react-router-dom'
 import "./Home.css"
 
-// Roles para cada usuário. em outras palavras oq cada tipo de usuário tem poder de fazer.
+// Roles para cada usuário, em outras palavras, oq cada tipo de usuário tem poder de fazer.
 const homePorTipoUsuario = {
   aluno: [
     { label: 'Meus Dados', rota: '/meus-dados'}, // dados pessoais do aluno

@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom"
-import Formulario from "../../components/UserForm.jsx"
+import Formulario from "../../components/formRegisterGeneric/UserForm"
 import Back from "../../assets/icons/arrow-left.svg?react"
 
 import "./CreateAccount.css"
