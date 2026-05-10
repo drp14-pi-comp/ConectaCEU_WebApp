@@ -195,7 +195,7 @@
     margin-top: 3rem;
     margin-bottom: 2rem;
 
-    font-size: 18px;
+    font-size: 16px;
     padding: .6rem;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
 }
@@ -204,6 +204,45 @@
   opacity: 0.7;
   cursor: not-allowed;
 }
+
+/* Botões de modo edição */
+.box-btn-form{
+    display: inline-flex;
+    justify-content: space-between;
+    padding: 0rem 2rem;
+}
+
+.box-btn-form .btn-delete{
+    margin-top: 3rem;
+    margin-bottom: 2rem;
+    background-color: red;
+    font-size: 16px;
+    padding: .6rem;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+}
+
+.box-btn-cancel-delete{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.box-btn-cancel-delete .btn-cancel-delete{
+    margin-top: 3rem;
+    margin-bottom: 2rem;
+
+    font-size: 16px;
+    padding: .6rem .85rem;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+}
+
+/* Aviso de exclusão  */
+.warning-delete{
+    text-align: center;
+    font-size: 18px;
+    padding: 1rem;
+}
+
 
 /* mobile */
 @media (max-width: 768px){
@@ -235,6 +274,10 @@
 
     .term p{
         margin: 0rem;
+    }
+
+    .box-btn-form{
+        padding: 0rem .6rem;
     }
 
 }

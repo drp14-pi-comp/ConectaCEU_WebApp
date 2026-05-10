@@ -13,6 +13,8 @@
   --background-secondary-color: #F5F9FC;
   --text-color: #0f1112;
   --font-family: sans-serif, Helvetica, Arial ;
+  --text-error-color: rgb(230, 9, 9);
+  --background-error-color: rgb(255, 214, 214);
 }
 
 /* Estilo global do body */

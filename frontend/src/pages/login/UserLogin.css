@@ -136,7 +136,7 @@ input[type="checkbox"] {
 .error-message{
     text-align: center;
     padding-top: 2rem;
-    color: rgb(230, 9, 9);
+    color: var(--text-error-color);
 }
 
 .error-message[id="emailError"]{

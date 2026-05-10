@@ -1,16 +1,22 @@
 import { Link } from "react-router-dom"
+import { useState } from "react"
 
 import { useUserForm } from "../../hooks/useUserForm"
 import { useAuth } from '../../hooks/useAuth'
 import { getAgeType } from "../../utils/TypeAge"
 
 import "./UserForm.css"
+import ModalDeleteAccount from "./ModalDeleteAccount"
 
 
-// add botao de excluir conta, modal para confirmaçao e melhorar ace
+// modal para confirmaçao e melhorar acessibilidade
 const UserForm = () => {
 
   const { user } = useAuth()
+  const [openModal, setOpenModal] = useState(false)
+  
+
+  const isEdit = true
 
   const {
     formData,
@@ -18,9 +24,12 @@ const UserForm = () => {
     handleResponsavelChange,
     handleResponsavelFileChange,
     handleSubmit,
-    isEdit,
+    handleDelete,
+    handleCancelDelete,
+    // isEdit,
     role,
-    loading
+    loading,
+    userDisable
   } = useUserForm(user)
   
   
@@ -119,6 +128,7 @@ const UserForm = () => {
               value={formData.email}
               onChange={handleChange}
               placeholder="ex: exemplo2@email.com"
+              autoComplete="email"
               maxLength={200} 
               required
             />
@@ -560,16 +570,65 @@ const UserForm = () => {
 
           </div>
         )}
+        {!isEdit ? (
+          <button 
+            className={`btn ${loading ? "loading" : ""}`}
+            type="submit" 
+            disabled={loading}
+          >
+            {loading ? "Salvando..." : 
+              (isEdit ? "Salvar alterações" : "Criar conta")
+            }
+          </button>
 
-        <button 
-          className={`btn ${loading ? "loading" : ""}`}
-          type="submit" 
-          disabled={loading}
-        >
-          {loading ? "Salvando..." : 
-            (isEdit ? "Salvar alterações" : "Criar conta")
-          }
-        </button>
+        ) : ( 
+          <>
+            {!userDisable ? (
+              <div className="box-btn-form">
+                <button 
+                  type="button" 
+                  className="btn-delete"
+                  onClick={() => setOpenModal(true)}
+                >
+                  Apagar conta
+                </button>
+
+                <button 
+                  className={`btn ${loading ? "loading" : ""}`}
+                  type="submit" 
+                  disabled={loading}
+                >
+                  {loading ? "Salvando..." : 
+                    (isEdit ? "Salvar alterações" : "Criar conta")
+                  }
+                </button>
+              </div>
+            ) : (
+              <div className="box-btn-cancel-delete">
+                <button 
+                  type="button" 
+                  className="btn-cancel-delete"
+                  onClick={handleCancelDelete}
+                >
+                  Habilitar usuário
+                </button>
+              </div>
+            )}
+            
+              <ModalDeleteAccount 
+                isOpen={openModal} 
+                setModalOpen={() => setOpenModal(false)} 
+                handleDelete={handleDelete}
+              />
+        
+          </>
+        )}
+
+        {userDisable && (
+          <div className="warning-delete">
+            <p>Sua conta está agendada para exclusão.</p>
+          </div>
+        )}
 
       </form>
     </div>

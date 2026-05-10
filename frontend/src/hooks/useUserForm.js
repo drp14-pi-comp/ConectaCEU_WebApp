@@ -2,7 +2,7 @@ import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import toast from "react-hot-toast"
 
-import { createUser, updateUser } from "../services/userService"
+import { cancelDelete, createUser, deleteUser, updateUser } from "../services/userService"
 import { getAgeType } from "../utils/TypeAge"
 import { validateEmail } from "../utils/ValidateEmail"
 import { validateCPF } from "../utils/ValidateCPF"
@@ -110,9 +110,11 @@ export function useUserForm(user) {
     const role = user?.tipo_usuario || "aluno"
     
     const navigate = useNavigate()
+
     const [formData, setFormData] = useState(() => getInitialFormData(user))
     const [error, setError] = useState(null) // mensagem de erro fixa
     const [loading, setLoading] = useState(false)
+    const [userDisable, setUserDisable] = useState(false)
 
     const ageType = getAgeType(formData.data_nascimento)
 
@@ -245,15 +247,59 @@ export function useUserForm(user) {
         }
     }
 
+    // Desativar conta
+    const handleDelete = async (e) => {
+        e.preventDefault()
+
+        setError("")  
+
+        try {
+            setLoading(true)
+            const userDisable = await deleteUser(user.id)
+
+            setUserDisable(userDisable)
+            toast.success("Conta desativada com sucesso!")
+
+        } catch (error) {
+            console.error(error)
+            setError("Erro ao dasativar a conta")
+            toast.error("Erro ao desativar a conta")
+        }finally{
+            setLoading(false)
+        }
+    }
+
+    //Reativa usuário
+    const handleCancelDelete = async (e) => {
+        e.preventDefault()
+
+        setError("")
+
+        try {
+            await cancelDelete(user.id)
+
+            setUserDisable(false)
+            toast.success("Usuário reativado!")
+
+        } catch (error) {
+            console.error(error)
+            setError("Erro ao reativar usuário")
+            toast.error("Erro ao reativar usuário")
+        }
+    }
+
     return {
         formData,
         handleChange,
         handleResponsavelChange,
         handleResponsavelFileChange,
         handleSubmit,
+        handleDelete,
+        handleCancelDelete,
         isEdit,
         role,
         error,
-        loading
+        loading,
+        userDisable
     }
 }
