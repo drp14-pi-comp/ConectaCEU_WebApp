@@ -106,7 +106,9 @@ function validateForm(formData, ageType, role) {
 
 export function useUserForm(user) {
 
-    const isEdit = !!user
+    const [isEdit, setIsEdit] = useState(false)
+    const isView = !!user
+    
     const role = user?.tipo_usuario || "aluno"
     
     const navigate = useNavigate()
@@ -117,6 +119,14 @@ export function useUserForm(user) {
     const [userDisable, setUserDisable] = useState(false)
 
     const ageType = getAgeType(formData.data_nascimento)
+
+
+    // Habilita edição
+    const handleEdit = (mode) => (e) => {
+        e.preventDefault()
+
+        setIsEdit(mode)
+    }
 
     // inputs normais + arquivos
     const handleChange = (e) => {
@@ -251,7 +261,7 @@ export function useUserForm(user) {
     const handleDelete = async (e) => {
         e.preventDefault()
 
-        setError("")  
+        setError(null)  
 
         try {
             setLoading(true)
@@ -273,7 +283,7 @@ export function useUserForm(user) {
     const handleCancelDelete = async (e) => {
         e.preventDefault()
 
-        setError("")
+        setError(null)
 
         try {
             await cancelDelete(user.id)
@@ -290,6 +300,7 @@ export function useUserForm(user) {
 
     return {
         formData,
+        handleEdit,
         handleChange,
         handleResponsavelChange,
         handleResponsavelFileChange,
@@ -297,6 +308,7 @@ export function useUserForm(user) {
         handleDelete,
         handleCancelDelete,
         isEdit,
+        isView,
         role,
         error,
         loading,

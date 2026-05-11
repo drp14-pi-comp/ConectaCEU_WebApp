@@ -2,6 +2,7 @@ import Trash from "../../assets/icons/trash.svg?react"
 
 import "./ModalDeleteAccount.css"
 
+
 export default function ModalDeleteAccount({isOpen, setModalOpen, handleDelete}) {
 
   if(isOpen){

@@ -9,32 +9,33 @@ import "./UserForm.css"
 import ModalDeleteAccount from "./ModalDeleteAccount"
 
 
-// modal para confirmaçao e melhorar acessibilidade
+
+
 const UserForm = () => {
 
   const { user } = useAuth()
   const [openModal, setOpenModal] = useState(false)
-  
-
-  const isEdit = true
 
   const {
     formData,
+    handleEdit,
     handleChange,
     handleResponsavelChange,
     handleResponsavelFileChange,
     handleSubmit,
     handleDelete,
     handleCancelDelete,
-    // isEdit,
+    isEdit,
+    isView,
     role,
     loading,
     userDisable
   } = useUserForm(user)
   
-  
   const ageType = getAgeType(formData.data_nascimento)
 
+  const readOnly = !isEdit || !isView
+  
 
   return (
     <div className="container-form-register">
@@ -50,6 +51,7 @@ const UserForm = () => {
         <div className="form-grid">
           
           <div id="doc-aluno" className="input-group">
+
             <label>Documento<span>*</span></label>
             <div className="input-group-doc">
               <select 
@@ -57,6 +59,7 @@ const UserForm = () => {
                 id="documento"
                 value={formData.tipo_documento}
                 onChange={handleChange} 
+                disabled={readOnly}
                 required
               >
                 <option value="default">Selecionar</option>
@@ -68,6 +71,7 @@ const UserForm = () => {
                 name="num_documento"
                 value={formData.num_documento}
                 onChange={handleChange} 
+                disabled={readOnly}
                 placeholder="12345678900"
                 minLength={9}
                 maxLength={11} 
@@ -81,7 +85,8 @@ const UserForm = () => {
             <input 
               type="file" 
               name="doc_frente"
-              onChange={handleChange} 
+              onChange={handleChange}
+              disabled={readOnly} 
               required={!isEdit}
             />
           </div>
@@ -92,6 +97,7 @@ const UserForm = () => {
               type="file" 
               name="doc_verso"
               onChange={handleChange} 
+              disabled={readOnly}
               placeholder="Documento a ser carregado" 
               required={!isEdit}
             />
@@ -102,7 +108,8 @@ const UserForm = () => {
             <input 
               type="file" 
               name="doc_foto"
-              onChange={handleChange} 
+              onChange={handleChange}
+              disabled={readOnly} 
               required={!isEdit}
             />
           </div>  
@@ -114,6 +121,7 @@ const UserForm = () => {
               name="nome_completo" 
               value={formData.nome_completo}
               onChange={handleChange}
+              disabled={readOnly}
               placeholder="ex: Enzo de Souza Silva" 
               maxLength={150}
               required
@@ -127,6 +135,7 @@ const UserForm = () => {
               name="email" 
               value={formData.email}
               onChange={handleChange}
+              disabled={readOnly}
               placeholder="ex: exemplo2@email.com"
               autoComplete="email"
               maxLength={200} 
@@ -141,6 +150,7 @@ const UserForm = () => {
               name="data_nascimento"
               value={formData.data_nascimento} 
               onChange={handleChange}
+              disabled={readOnly}
               placeholder="ex: 21/07/2010"
               required
             />
@@ -153,6 +163,7 @@ const UserForm = () => {
               name="telefone"
               value={formData.telefone}
               onChange={handleChange}
+              disabled={readOnly}
               pattern="[0-9\s\-\(\)\+]*" 
               placeholder="ex: (11)92345-6789"
               required 
@@ -165,7 +176,8 @@ const UserForm = () => {
               type="tel" 
               name="telefone2"
               value={formData.telefone2}
-              onChange={handleChange} 
+              onChange={handleChange}
+              disabled={readOnly} 
               pattern="[0-9\s\-\(\)\+]*" 
               placeholder="ex: (11)92345-6789"
             />
@@ -178,6 +190,7 @@ const UserForm = () => {
               id="genero" 
               value={formData.genero}
               onChange={handleChange}
+              disabled={readOnly}
               required
             >
               <option value="default">Selecionar</option>
@@ -195,7 +208,8 @@ const UserForm = () => {
               name="sexo" 
               id="sexo"
               value={formData.sexo}
-              onChange={handleChange} 
+              onChange={handleChange}
+              disabled={readOnly} 
               required
             >
               <option value="default">Selecionar</option>
@@ -210,12 +224,13 @@ const UserForm = () => {
               type="text" 
               name="escola"
               value={formData.escola}
-              onChange={handleChange} 
+              onChange={handleChange}
+              disabled={readOnly} 
               placeholder="ex: EMEF Maria Clara Machado" 
               required
             />
           </div>
-          {!isEdit && (
+          {!isEdit || !isView && (
             <>
               <div className="input-group">
                 <label>Senha<span>*</span></label>
@@ -260,6 +275,7 @@ const UserForm = () => {
               name="cep"
               value={formData.cep}
               onChange={handleChange} 
+              disabled={readOnly}
               placeholder="ex: 12345-678" 
               required
             />
@@ -272,6 +288,7 @@ const UserForm = () => {
               name="logradouro"
               value={formData.logradouro}
               onChange={handleChange} 
+              disabled={readOnly}
               placeholder="ex: Rua Louro Rosa" 
               required
             />
@@ -284,6 +301,7 @@ const UserForm = () => {
               name="num_residencia"
               value={formData.num_residencia}
               onChange={handleChange} 
+              disabled={readOnly}
               placeholder="ex: 11" 
               required
             />
@@ -296,6 +314,7 @@ const UserForm = () => {
               name="complemento"
               value={formData.complemento}
               onChange={handleChange} 
+              disabled={readOnly}
               placeholder="ex: bloco 2, apartamento 8"
             />
           </div>
@@ -307,6 +326,7 @@ const UserForm = () => {
               name="bairro"
               value={formData.bairro}
               onChange={handleChange} 
+              disabled={readOnly}
               placeholder="ex: Aricanduva" 
               required
             />
@@ -320,6 +340,7 @@ const UserForm = () => {
                 id="tipo_usuario"
                 value={formData.tipo_usuario}
                 onChange={handleChange} 
+                disabled={readOnly}
                 required
               > 
                 <option value="coordenador">Coordenador(a)</option>
@@ -344,7 +365,8 @@ const UserForm = () => {
                   type="text" 
                   name="nome_completo_responsavel"
                   value={formData.responsaveis[0].nome_completo_responsavel}
-                  onChange={(e) => handleResponsavelChange(0, e)} 
+                  onChange={(e) => handleResponsavelChange(0, e)}
+                  disabled={readOnly} 
                   placeholder="ex: Eduardo de Souza Silva" 
                   required
                 />
@@ -356,7 +378,8 @@ const UserForm = () => {
                   type="text" 
                   name="grau"
                   value={formData.responsaveis[0].grau}
-                  onChange={(e) => handleResponsavelChange(0, e)} 
+                  onChange={(e) => handleResponsavelChange(0, e)}
+                  disabled={readOnly} 
                   placeholder="ex: pai" 
                   required
                 />
@@ -369,7 +392,8 @@ const UserForm = () => {
                     name="tipo_documento" 
                     id="documento"
                     value={formData.responsaveis[0].tipo_documento}
-                    onChange={(e) => handleResponsavelChange(0, e)}  
+                    onChange={(e) => handleResponsavelChange(0, e)} 
+                    disabled={readOnly} 
                     required
                     >
                     <option value="default">selecionar</option>
@@ -381,6 +405,7 @@ const UserForm = () => {
                     name="num_documento"
                     value={formData.responsaveis[0].num_documento}
                     onChange={(e) => handleResponsavelChange(0, e)} 
+                    disabled={readOnly}
                     placeholder="12345678900"
                     required
                     minLength={8}
@@ -395,6 +420,7 @@ const UserForm = () => {
                   type="file" 
                   name="doc_responsavel" 
                   onChange={(e) => handleResponsavelFileChange(0, e)}
+                  disabled={readOnly}
                   required={!isEdit}
                 />
               </div>
@@ -405,6 +431,7 @@ const UserForm = () => {
                   type="file" 
                   name="doc_autorizacao"
                   onChange={(e) => handleResponsavelFileChange(0, e)} 
+                  disabled={readOnly}
                   required={!isEdit}
                 />
               </div>
@@ -420,6 +447,7 @@ const UserForm = () => {
                   name="nome_completo_responsavel"
                   value={formData.responsaveis[1].nome_completo_responsavel}
                   onChange={(e) => handleResponsavelChange(1, e)} 
+                  disabled={readOnly}
                   placeholder="ex: Julia de Souza Silva" 
                 />
               </div>
@@ -431,6 +459,7 @@ const UserForm = () => {
                   name="grau"
                   value={formData.responsaveis[1].grau}
                   onChange={(e) => handleResponsavelChange(1, e)} 
+                  disabled={readOnly}
                   placeholder="ex: Mãe" 
                 />
               </div>
@@ -442,7 +471,8 @@ const UserForm = () => {
                     name="tipo_documento" 
                     id="documento"
                     value={formData.responsaveis[1].tipo_documento}
-                    onChange={(e) => handleResponsavelChange(1, e)}  
+                    onChange={(e) => handleResponsavelChange(1, e)}
+                    disabled={readOnly}  
                   >
                     <option value="default">selecionar</option>
                     <option value="rg">RG</option>
@@ -453,6 +483,7 @@ const UserForm = () => {
                     name="num_documento"
                     value={formData.responsaveis[1].num_documento}
                     onChange={(e) => handleResponsavelChange(1, e)} 
+                    disabled={readOnly}
                     placeholder="12345678900"
                     minLength={8}
                     maxLength={11}
@@ -466,6 +497,7 @@ const UserForm = () => {
                   type="file" 
                   name="doc_responsavel"
                   onChange={(e) => handleResponsavelFileChange(1, e)}
+                  disabled={readOnly}
                 />
               </div>
 
@@ -475,6 +507,7 @@ const UserForm = () => {
                   type="file" 
                   name="doc_autorizacao"
                   onChange={(e) => handleResponsavelFileChange(1, e)}
+                  disabled={readOnly}
                 />
               </div>
             </div>
@@ -491,7 +524,8 @@ const UserForm = () => {
                 <input 
                   type="file" 
                   name="doc_atestado"
-                  onChange={handleChange} 
+                  onChange={handleChange}
+                  disabled={readOnly} 
                   required={!isEdit}
                 />
               </div>
@@ -504,28 +538,28 @@ const UserForm = () => {
           <div className="terms-container">
             
             <div className="term">
-              <input type="checkbox" required/>
+              <input type="checkbox" disabled={isView} required/>
               <p>O funcionário atesta que as informações registradas 
                 aqui são autênticas, estando sujeito ás devidas sanções caso contrário.
               </p>
             </div>
 
             <div className="term">
-              <input type="checkbox" required/>
+              <input type="checkbox" disabled={isView} required/>
               <p>O funcionário autoriza o uso de dados pessoais 
                 conforme a LGPD(Lei n° 13.709/2018).
               </p>
             </div>
 
             <div className="term">
-              <input type="checkbox" required/>
+              <input type="checkbox" disabled={isView} required/>
               <p>O funcionário autoriza o uso de imagem quando
                 necessário para materiais de propaganda do CEU 
                 conforme a LGPD(Lei n° 13.709/2018).
               </p>
             </div>
             <div className="term">
-              <input type="checkbox" required/>
+              <input type="checkbox" disabled={isView} required/>
               <p>O funcionário concorda com os {" "}
                 <Link to="/termos-de-uso" className="link" target="_blank">Termos de Uso</Link>
                 {" "} e as {" "}
@@ -538,21 +572,21 @@ const UserForm = () => {
           <div className="terms-container">
 
             <div className="term">
-              <input type="checkbox" required/>
+              <input type="checkbox" disabled={isView} required/>
               <p>O aluno ou responsável atesta que as informações registradas 
                 aqui são autênticas, estando sujeito ás devidas sanções caso contrário.
               </p>
             </div>
 
             <div className="term">
-              <input type="checkbox" required/>
+              <input type="checkbox" disabled={isView} required/>
               <p>O aluno ou responsável autoriza o uso de dados pessoais 
                 do aluno conforme a LGPD(Lei n° 13.709/2018).
               </p>
             </div>
 
             <div className="term">
-              <input type="checkbox" required/>
+              <input type="checkbox" disabled={isView} required/>
               <p>O aluno ou responsável autoriza o uso de imagem do aluno 
                 quando necessário para materiais de propaganda do CEU 
                 conforme a LGPD(Lei n° 13.709/2018).
@@ -560,25 +594,25 @@ const UserForm = () => {
             </div>
 
             <div className="term">
-              <input type="checkbox" required/>
+              <input type="checkbox" disabled={isView} required/>
               <p>O aluno ou responsável concorda com os {" "}  
                 <Link to="/termos-de-uso" className="link" target="_blank">Termos de Uso</Link>
                 {" "}e as{" "}
-                <Link to="/politica-de-privacidade" className="link" target="_blank">Política de Privacidade</Link>.
+                <Link 
+                  to="/politica-de-privacidade" 
+                  className="link" 
+                  target="_blank"
+                >
+                  Política de Privacidade
+                </Link>.
               </p>
             </div>
 
           </div>
         )}
-        {!isEdit ? (
-          <button 
-            className={`btn ${loading ? "loading" : ""}`}
-            type="submit" 
-            disabled={loading}
-          >
-            {loading ? "Salvando..." : 
-              (isEdit ? "Salvar alterações" : "Criar conta")
-            }
+        {!isView ? (
+          <button className="btn" type="submit">
+            Criar conta
           </button>
 
         ) : ( 
@@ -592,16 +626,29 @@ const UserForm = () => {
                 >
                   Apagar conta
                 </button>
-
-                <button 
-                  className={`btn ${loading ? "loading" : ""}`}
-                  type="submit" 
-                  disabled={loading}
-                >
-                  {loading ? "Salvando..." : 
-                    (isEdit ? "Salvar alterações" : "Criar conta")
-                  }
-                </button>
+                {!isEdit ? (
+                  <button className="btn" type="button" onClick={handleEdit(true)}>
+                    Editar
+                  </button>
+                ) : (
+                  <>
+                    <div>
+                      <button 
+                        className={`btn ${loading ? "loading" : ""}`}
+                        type="submit" 
+                        disabled={loading}
+                        onClick={handleSubmit}
+                      >
+                        {loading ? "Salvando..." : 
+                          "Salvar"
+                        }
+                      </button>
+                      <button className="btn-cancel-edit" type="button" onClick={handleEdit(false)}>
+                        Cancelar 
+                      </button>
+                    </div>
+                  </>
+                )}
               </div>
             ) : (
               <div className="box-btn-cancel-delete">

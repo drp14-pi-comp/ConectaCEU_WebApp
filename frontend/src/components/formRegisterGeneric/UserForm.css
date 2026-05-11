@@ -188,7 +188,7 @@
     opacity: .7;
 }
 
-/* botão enviar */
+/* botões de envio */
 .btn{
     width: fit-content;
     align-self: center;
@@ -212,6 +212,19 @@
     padding: 0rem 2rem;
 }
 
+/* Botao cancelar edição */
+.btn-cancel-edit{
+    margin-left: 1.2rem;
+    margin-top: 3rem;
+    margin-bottom: 2rem;
+
+    font-size: 16px;
+    padding: .6rem;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+    background-color: orange;
+}
+
+/* Botão apagar conta */
 .box-btn-form .btn-delete{
     margin-top: 3rem;
     margin-bottom: 2rem;
@@ -221,6 +234,7 @@
     box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
 }
 
+/* Botão cancelar exclusão */
 .box-btn-cancel-delete{
     display: flex;
     align-items: center;
