@@ -2,11 +2,14 @@ import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import toast from "react-hot-toast"
 
-import { cancelDelete, createUser, deleteUser, updateUser } from "../services/userService"
 import { getAgeType } from "../utils/TypeAge"
 import { validateEmail } from "../utils/ValidateEmail"
 import { validateCPF } from "../utils/ValidateCPF"
 import { validateRG } from "../utils/ValidateRG"
+
+import { cancelDelete, createUser, deleteUser, updateUser } from "../services/userService"
+
+import { useAuth } from "./useAuth"
 
 
 // função responsável por montar o estado inicial dos dados
@@ -15,7 +18,7 @@ function getInitialFormData(user) {
         status: user?.status || "",
         tipo_documento: user?.tipo_documento || "",
         num_documento: user?.num_documento || "",
-        nome_completo: user?.name_completo || "",
+        nome_completo: user?.nome_completo || "",
         email: user?.email || "",
         telefone: user?.telefone || "",
         telefone2: user?.telefone2 || "",
@@ -62,7 +65,7 @@ function getInitialFormData(user) {
 
 
 // Função para validar campos do formulário antes de enviar ao backend
-function validateForm(formData, ageType, role) {
+function validateForm(formData, ageType, role, isEdit) {
 
     const isEmail = validateEmail(formData.email)
     
@@ -84,15 +87,28 @@ function validateForm(formData, ageType, role) {
         return "Tipo de documento inválido!"
     }
 
-    if (formData.senha && formData.senha !== formData.repetir_senha) {
-        return "Senhas não coincidem!"
+    if (
+        formData.senha ||
+        formData.repetir_senha
+    ) {
+        if (formData.senha !== formData.repetir_senha) {
+            return "Senhas não coincidem!"
+        }
     }
 
-    if (ageType === "minor" && !formData.responsaveis[0].nome_completo_responsavel) {
-        return "Responsável obrigatório para menores!"
+    if (ageType === "minor") {
+
+        const responsavel = formData.responsaveis[0]
+
+        if (
+            !responsavel.nome_completo_responsavel ||
+            !responsavel.num_documento
+        ) {
+            return "Responsável obrigatório para menores!"
+        }
     }
 
-    if (ageType === "elderly" && !formData.documentos.doc_atestado) {
+    if (ageType === "elderly" && !formData.documentos.doc_atestado && !isEdit) {
         return "Atestado obrigatório para maiores de 70 anos!"
     }
 
@@ -107,16 +123,19 @@ function validateForm(formData, ageType, role) {
 export function useUserForm(user) {
 
     const [isEdit, setIsEdit] = useState(false)
-    const isView = !!user
+    const isView = !!user && !isEdit
     
-    const role = user?.tipo_usuario || "aluno"
+    const { user: authUser } = useAuth()
+    const role = authUser?.tipo_usuario || "aluno"
     
     const navigate = useNavigate()
 
     const [formData, setFormData] = useState(() => getInitialFormData(user))
     const [error, setError] = useState(null) // mensagem de erro fixa
     const [loading, setLoading] = useState(false)
-    const [userDisable, setUserDisable] = useState(false)
+    const [userDisable, setUserDisable] = useState(
+        user ? user.status !== "ativo" : false
+    )
 
     const ageType = getAgeType(formData.data_nascimento)
 
@@ -130,19 +149,29 @@ export function useUserForm(user) {
 
     // inputs normais + arquivos
     const handleChange = (e) => {
-        const { name, value, type, files } = e.target
+        const { name, value, type, files, checked } = e.target
 
         setError(null)
 
         if (type === "file") {
-        setFormData(prev => ({
+
+            setFormData(prev => ({
                 ...prev,
                 documentos: {
                 ...prev.documentos,
                 [name]: files[0]
                 }
             }))
+
+        } else if(type === "checkbox"){
+
+            setFormData(prev => ({
+                ...prev, 
+                [name]: checked
+            }))
+
         } else {
+
             setFormData(prev => ({
                 ...prev,
                 [name]: value
@@ -155,7 +184,11 @@ export function useUserForm(user) {
         const { name, value } = e.target
 
         const novos = [...formData.responsaveis]
-        novos[index][name] = value
+
+        novos[index] = {
+            ...novos[index],
+            [name]: value
+        }
 
         setFormData(prev => ({
             ...prev,
@@ -189,7 +222,7 @@ export function useUserForm(user) {
 
         setError(null)
 
-        const validationError = validateForm(formData, ageType, role)
+        const validationError = validateForm(formData, ageType, role, isEdit)
 
         if(validationError){
             setError(validationError)
@@ -206,24 +239,46 @@ export function useUserForm(user) {
 
             // dados simples (email, telefone, etc)
             Object.keys(formData).forEach((key) => {
-                if (key !== "documentos" && key !== "responsaveis") {
-                    form.append(key, formData[key])
-                }
-            })
 
-            // 
-            if (role === "admin") {
-                form.append("status", "ativo")
-            }
+                // ignora campos especiais
+                if (
+                    key === "documentos" ||
+                    key === "responsaveis" ||
+                    key === "repetir_senha"
+                ) {
+                    return
+                }
+
+                // evita enviar senha vazia
+                if (key === "senha" && !formData.senha) {
+                    return
+                }
+
+                // admin criando usuário = ativo
+                if (key === "status" && role === "admin" && !isEdit) {
+                    form.append("status", "ativo")
+                    return
+                }
+
+                form.append(key, formData[key])
+            })
 
             // responsáveis
             form.append("responsaveis", JSON.stringify(formData.responsaveis))
 
             // documentos principais
-            form.append("doc_frente", formData.documentos.doc_frente)
-            form.append("doc_verso", formData.documentos.doc_verso)
-            form.append("doc_foto", formData.documentos.doc_foto)
-            form.append("doc_atestado", formData.documentos.doc_atestado)
+            if(formData.documentos.doc_frente){
+                form.append("doc_frente", formData.documentos.doc_frente)
+            }
+            if(formData.documentos.doc_verso){
+                form.append("doc_verso", formData.documentos.doc_verso)
+            }
+            if(formData.documentos.doc_foto){
+                form.append("doc_foto", formData.documentos.doc_foto)
+            }
+            if(formData.documentos.doc_atestado){
+                form.append("doc_atestado", formData.documentos.doc_atestado)
+            }
 
             // docs responsáveis
             formData.documentos.responsaveis.forEach((resp, index) => {
@@ -238,14 +293,15 @@ export function useUserForm(user) {
             
             if (isEdit) {
                 await updateUser(user.id, form)
+                setError(null)
                 toast.success("Usuário atualizado!")
             } else {
                 await createUser(form)
+                setError(null)
                 toast.success("Usuário criado!")
                 
-                setTimeout(() => {
-                    navigate("/login")
-                }, 1500)
+                navigate("/login", {replace: true})
+                
             }
 
         } catch (error) {
@@ -265,14 +321,14 @@ export function useUserForm(user) {
 
         try {
             setLoading(true)
-            const userDisable = await deleteUser(user.id)
+            await deleteUser(user.id)
 
-            setUserDisable(userDisable)
-            toast.success("Conta desativada com sucesso!")
+            setUserDisable(true)
+            toast.success("Conta desativada!")
 
         } catch (error) {
             console.error(error)
-            setError("Erro ao dasativar a conta")
+            setError("Erro ao desativar a conta")
             toast.error("Erro ao desativar a conta")
         }finally{
             setLoading(false)
